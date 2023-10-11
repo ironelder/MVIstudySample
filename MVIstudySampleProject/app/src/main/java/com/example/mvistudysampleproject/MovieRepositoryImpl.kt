@@ -6,6 +6,6 @@ import javax.inject.Singleton
 
 class MovieRepositoryImpl @Inject constructor(private val service: MovieApiService) : MovieRepository {
     override suspend fun getNowPlayingMovieList(page: Int): Response<Any> {
-        return service.getNowPlayingMovieList(page)
+        return service.getNowPlayingMovieList("en-US", page)
     }
 }
