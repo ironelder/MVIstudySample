@@ -2,6 +2,7 @@ package com.example.mvistudysampleproject
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
@@ -13,9 +14,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
+class AppModule {
+    @Provides
+    fun provideMovieRepository(service: MovieApiService): MovieRepository {
+        return MovieRepositoryImpl(service)
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
 class ApiModule {
     @Provides
-    fun provideBaseUrl() = "https://api.themoviedb.org/3"
+    fun provideBaseUrl() = "https://api.themoviedb.org"
 
     @Singleton
     @Provides
@@ -49,5 +59,11 @@ class ApiModule {
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieApiService(retrofit: Retrofit):MovieApiService {
+        return retrofit.create(MovieApiService::class.java)
     }
 }
