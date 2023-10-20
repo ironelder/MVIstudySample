@@ -23,9 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         useCase.getNowPlayingMovieList(1).collectIn(this) {
-            Log.d("ironelder", "test")
+            Log.d("ironelder", "test = $it")
         }
-
     }
 }
 
