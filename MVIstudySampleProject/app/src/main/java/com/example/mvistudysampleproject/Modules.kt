@@ -2,7 +2,6 @@ package com.example.mvistudysampleproject
 
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
@@ -44,7 +43,10 @@ class ApiModule {
     fun provideHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .header("Authorization", "Bearer e17c2715face752d9ed1a2a0054aa7d6")
+                .header(
+                    "Authorization",
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMzVjOWEwMDI1ZDk1MDg1NTQ3YzNkOTYxNGFjMTRlYiIsInN1YiI6IjVlNDhkMWQzMmQ5Mzc1MDAxN2E3YzA4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wQbFPJbw_8cM5X15fuTndxedPZFIpkkhcsLr-StE3PE",
+                )
                 .header("accept", "application/json")
                 .build()
             chain.proceed(request)
@@ -63,7 +65,7 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun provideMovieApiService(retrofit: Retrofit):MovieApiService {
+    fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
     }
 }
